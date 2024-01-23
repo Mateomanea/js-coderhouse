@@ -1,0 +1,15 @@
+{
+    "usuarios": [
+      {
+        "email": "manea96m@gmail.com",
+        "contrasena": "coder123",
+        "nombre": "mm96"
+      },
+      {
+        "email": "rulaso19@gmail.com",
+        "contrasena": "elRulo19",
+        "nombre": "rulo19"
+      }
+    ]
+  }
+  
