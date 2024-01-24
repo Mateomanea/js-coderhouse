@@ -1,45 +1,89 @@
-async function cargarUsuario() {
+if (!localStorage.getItem('usuarios')) {
+    localStorage.setItem('usuarios', JSON.stringify([]));
+}
+
+async function cargarUsuariosJSON() {
     try {
-        const response = await fetch('../db.json');
+        const response = await fetch('db.json');
         const data = await response.json();
-        return data.usuarios;
+        const usuarios = data.usuarios || [];
+
+        if (!Array.isArray(usuarios)) {
+            console.error('Error. Los datos JSON no son un array');
+            return [];
+        }
+
+        return usuarios;
     } catch (error) {
-        console.error('Error al cargar usuarios', error);
+        console.error('Error al cargar usuarios JSON', error);
         return [];
     }
+}
+
+async function cargarUsuario() {
+    const usuariosString = localStorage.getItem('usuarios');
+    const usuariosLocal = usuariosString ? JSON.parse(usuariosString) : [];  
+    
+    if (!Array.isArray(usuariosLocal)) {
+        console.error('Los datos del localstorage no son array');
+        return [];
+    }
+
+    const usuariosJSON = await cargarUsuariosJSON();
+    const usuariosCombinados = [...usuariosLocal, ...usuariosJSON];
+
+    return usuariosCombinados;
 };
 
+function guardarUsuariosLocal(usuarios) {
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+}
+
 function verificarLogin(nombreUsuario, contrasena, usuarios) {
-    for (let i = 0; i < usuarios.length; i++) {
-        if (usuarios[i].nombre === nombreUsuario && usuarios[i].contrasena === contrasena) {
-            return usuarios[i].nombre;
+    let usuarioEncontrado = null;
+
+    usuarios.forEach(usuario => {
+        if(usuario.nombre === nombreUsuario && usuario.contrasena === contrasena) {
+            usuarioEncontrado = usuario.nombre;
         }
-    }
-    return null;
+    });
+
+    return usuarioEncontrado;
 }
 
 async function iniciarSesion() {
+    console.log('iniciando...')
     let nombreUsuarioIngresado = document.getElementById('nombreUsuarioLogin').value;
     let contrasenaIngresada = document.getElementById('passwordLogin').value;
 
     let usuarios = await cargarUsuario();
+
+    if (!Array.isArray(usuarios)) {
+        console.error('La variable usuarios no es un array');
+        return;
+    }
+
     let resultadoLogin = verificarLogin(nombreUsuarioIngresado, contrasenaIngresada, usuarios);
 
     if (resultadoLogin) {
+
         Swal.fire({
             icon: 'success',
             title: `Bienvenido ${resultadoLogin}!`,
             showConfirmButton: false,
             timer: 1500
         }).then(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'juego.html';
         });
+
     } else {
+
         Swal.fire({
             icon: 'error',
             title: 'No se pudo acceder',
             text: 'Nombre de usuario o contraseña incorrectos.'
         });
+
     }
 }
 
@@ -48,8 +92,9 @@ async function crearCuenta() {
     let nuevoEmail = document.getElementById('nuevoEmail').value;
     let nuevaPassword = document.getElementById('nuevaPassword').value;
     let confirmarPassword = document.getElementById('confirmarPassword').value;
-
+    
     if (nuevaPassword !== confirmarPassword) {
+        
         Swal.fire({
             icon: 'error',
             title: 'Error',
@@ -57,14 +102,30 @@ async function crearCuenta() {
         });
 
         return;
+
+    }
+    
+    let usuarios = await cargarUsuario();
+    console.log('Usuario antes...', usuarios)
+
+    if(!Array.isArray(usuarios)) {
+        console.error("ERROR! La variable de usuarios no es un array")
+        return;
     }
 
-    let usuarios = await cargarUsuario();
-    let usuarioExistente = usuarios.find(usuario => usuario.nombre === nombreUsuario);
 
+    let usuarioExistente = usuarios.find(usuario => usuario.nombre === nombreUsuario);
+    
     if (usuarioExistente) {
-        alert('El nombre de usuario está en uso.');
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'Usuario existente',
+            text: 'Intente nuevamente con otro nombre de usuario'
+        });
+
         return;
+
     };
 
     let nuevoUsuario = {
@@ -74,22 +135,13 @@ async function crearCuenta() {
     };
 
     usuarios.push(nuevoUsuario);
-
-
-
-    await fetch('../db.json', {
-        method: 'PUT',
-        headers: {
-            'Content-type': 'application/json',
-        },
-        body: JSON.stringify({usuarios}),
-    });
+    guardarUsuariosLocal(usuarios);
 
     Swal.fire({
         icon: 'succes',
         title: 'Cuenta creada con exito.',
         text: 'Ya puedes iniciar sesión'
-    })
+    });
 }
 
 document.getElementById('btnIniciarSesion').addEventListener('click', iniciarSesion);
@@ -103,4 +155,4 @@ document.getElementById('linkCrearCuenta').addEventListener('click', function() 
 document.getElementById('linkVolverLogin').addEventListener('click', function() {
     document.getElementById('login-container').style.display = 'block';
     document.getElementById('registro-container').style.display = 'none';
-})
+});
