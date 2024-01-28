@@ -11,8 +11,7 @@ async function cargarUsuariosJSON() {
         if (!Array.isArray(usuarios)) {
             console.error('Error. Los datos JSON no son un array');
             return [];
-        }
-
+        }   
         return usuarios;
     } catch (error) {
         console.error('Error al cargar usuarios JSON', error);
@@ -21,6 +20,7 @@ async function cargarUsuariosJSON() {
 }
 
 async function cargarUsuario() {
+    
     const usuariosString = localStorage.getItem('usuarios');
     const usuariosLocal = usuariosString ? JSON.parse(usuariosString) : [];  
     
@@ -66,6 +66,7 @@ async function iniciarSesion() {
     let resultadoLogin = verificarLogin(nombreUsuarioIngresado, contrasenaIngresada, usuarios);
 
     if (resultadoLogin) {
+        localStorage.setItem('nombreUsuario', resultadoLogin);
 
         Swal.fire({
             icon: 'success',

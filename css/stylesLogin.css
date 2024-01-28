@@ -19,7 +19,12 @@ body {
     height: 100vh;
     font-family: sans-serif;
     color: var(--color-white);
-    background-color: var(--color-black);
+
+    background: hsla(195, 86%, 50%, 1);
+    background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#12B3EB", endColorstr="#5460F9", GradientType=1 );
 
     display: flex;
     justify-content: center;
@@ -101,17 +106,26 @@ h2 {
 }
 
 #btnIniciarSesion {
-    background-color: var(--color-black);
+    background: hsla(195, 86%, 50%, 1);
+    background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#12B3EB", endColorstr="#5460F9", GradientType=1 );
     color: var(--color-white);
     letter-spacing: 1.2px;
     font-weight: bold;
     padding: 8px 0;
     cursor: pointer;
-    transition: background-color .3s ease-in ;
+    transition: background .3s ease-in ;
 }
 
 #btnIniciarSesion:hover, #btnIniciarSesion:focus {
-    background-color: #00164afd;
+    background: rgb(4, 101, 134);
+    background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -webkit-linear-gradient(hsla(236, 93%, 65%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#12B3EB", endColorstr="#5460F9", GradientType=1 );
+    box-shadow:  0 0 15px 0px #00000091;
 }
 
 /* REGISTRO CONTAINER */
@@ -157,7 +171,11 @@ h2 {
 }
 
 #btnCrearCuenta {
-    background-color: var(--color-black);
+    background: hsla(195, 86%, 50%, 1);
+    background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#12B3EB", endColorstr="#5460F9", GradientType=1 );
     color: var(--color-white);
     letter-spacing: 1.2px;
     font-weight: bold;
@@ -167,5 +185,10 @@ h2 {
 }
 
 #btnCrearCuenta:hover, #btnCrearCuenta:focus {
-    background-color: #00164afd;
+    background: rgb(4, 101, 134);
+    background: linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(195, 86%, 50%, 1) 0%, hsla(236, 93%, 65%, 1) 100%);
+    background: -webkit-linear-gradient(hsla(236, 93%, 65%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#12B3EB", endColorstr="#5460F9", GradientType=1 );
+    box-shadow:  0 0 15px 0px #00000091;
 }
